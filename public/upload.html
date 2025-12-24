@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Content - HomeStream</title>
+    <meta name="description" content="Upload movies and series to HomeStream">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar scrolled">
+        <a href="/" class="logo">HomeStream</a>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/#movies">Movies</a></li>
+            <li><a href="/#series">Series</a></li>
+        </ul>
+        <div class="nav-right">
+            <a href="/upload.html" class="btn btn-primary active">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17,8 12,3 7,8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                Upload
+            </a>
+        </div>
+    </nav>
+
+    <!-- Upload Container -->
+    <div class="upload-container">
+        <div class="upload-card">
+            <h1 class="upload-title">Upload Content</h1>
+            <p class="upload-subtitle">Share your movies and series with everyone on the network</p>
+
+            <form id="uploadForm">
+                <!-- Video Dropzone -->
+                <div class="dropzone" id="videoDropzone">
+                    <svg class="dropzone-icon" viewBox="0 0 24 24">
+                        <path
+                            d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z" />
+                    </svg>
+                    <p class="dropzone-text">Drag & drop your video file here</p>
+                    <p class="dropzone-hint">or click to browse • MP4, MKV, AVI, MOV supported</p>
+                    <input type="file" id="videoInput" name="video" accept="video/*" hidden>
+                </div>
+                <p id="videoFileName" style="color: var(--accent); text-align: center; margin-bottom: 1.5rem;"></p>
+
+                <!-- Content Type -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Content Type *</label>
+                        <select class="form-select" id="contentType" name="type" required>
+                            <option value="movie">🎬 Movie</option>
+                            <option value="series">📺 TV Series</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Genre</label>
+                        <select class="form-select" id="genre" name="genre">
+                            <option value="">Select Genre</option>
+                            <option value="Action">Action</option>
+                            <option value="Adventure">Adventure</option>
+                            <option value="Animation">Animation</option>
+                            <option value="Comedy">Comedy</option>
+                            <option value="Crime">Crime</option>
+                            <option value="Documentary">Documentary</option>
+                            <option value="Drama">Drama</option>
+                            <option value="Fantasy">Fantasy</option>
+                            <option value="Horror">Horror</option>
+                            <option value="Mystery">Mystery</option>
+                            <option value="Romance">Romance</option>
+                            <option value="Sci-Fi">Sci-Fi</option>
+                            <option value="Thriller">Thriller</option>
+                            <option value="War">War</option>
+                            <option value="Western">Western</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Title -->
+                <div class="form-group">
+                    <label class="form-label">Title *</label>
+                    <input type="text" class="form-input" id="title" name="title" placeholder="Enter title..." required>
+                </div>
+
+                <!-- Description -->
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-textarea" id="description" name="description"
+                        placeholder="Write a short description..."></textarea>
+                </div>
+
+                <!-- Year -->
+                <div class="form-group">
+                    <label class="form-label">Release Year</label>
+                    <input type="number" class="form-input" id="year" name="year" placeholder="e.g., 2024" min="1900"
+                        max="2100">
+                </div>
+
+                <!-- Thumbnail -->
+                <div class="form-group">
+                    <label class="form-label">Thumbnail / Cover Image</label>
+                    <div class="dropzone" id="thumbnailDropzone" style="padding: 1.5rem;">
+                        <svg class="dropzone-icon" viewBox="0 0 24 24" style="width: 40px; height: 40px;">
+                            <path
+                                d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" />
+                        </svg>
+                        <p class="dropzone-text" style="font-size: 0.95rem;">Drop cover image here or click to browse
+                        </p>
+                        <input type="file" id="thumbnailInput" name="thumbnail" accept="image/*" hidden>
+                    </div>
+                    <div class="thumbnail-preview" id="thumbnailPreview"></div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="progress-container" id="progressContainer">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <p class="progress-text" id="progressText">Uploading... 0%</p>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary upload-btn" id="submitBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17,8 12,3 7,8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    Upload Content
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        // ============ DROPZONE SETUP ============
+        const videoDropzone = document.getElementById('videoDropzone');
+        const videoInput = document.getElementById('videoInput');
+        const videoFileName = document.getElementById('videoFileName');
+        const thumbnailDropzone = document.getElementById('thumbnailDropzone');
+        const thumbnailInput = document.getElementById('thumbnailInput');
+        const thumbnailPreview = document.getElementById('thumbnailPreview');
+
+        // Video dropzone
+        videoDropzone.addEventListener('click', () => videoInput.click());
+        videoDropzone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            videoDropzone.classList.add('dragover');
+        });
+        videoDropzone.addEventListener('dragleave', () => {
+            videoDropzone.classList.remove('dragover');
+        });
+        videoDropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            videoDropzone.classList.remove('dragover');
+            if (e.dataTransfer.files[0]) {
+                videoInput.files = e.dataTransfer.files;
+                videoFileName.textContent = '✓ ' + e.dataTransfer.files[0].name;
+            }
+        });
+        videoInput.addEventListener('change', () => {
+            if (videoInput.files[0]) {
+                videoFileName.textContent = '✓ ' + videoInput.files[0].name;
+            }
+        });
+
+        // Thumbnail dropzone
+        thumbnailDropzone.addEventListener('click', () => thumbnailInput.click());
+        thumbnailDropzone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            thumbnailDropzone.classList.add('dragover');
+        });
+        thumbnailDropzone.addEventListener('dragleave', () => {
+            thumbnailDropzone.classList.remove('dragover');
+        });
+        thumbnailDropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            thumbnailDropzone.classList.remove('dragover');
+            if (e.dataTransfer.files[0]) {
+                thumbnailInput.files = e.dataTransfer.files;
+                previewThumbnail(e.dataTransfer.files[0]);
+            }
+        });
+        thumbnailInput.addEventListener('change', () => {
+            if (thumbnailInput.files[0]) {
+                previewThumbnail(thumbnailInput.files[0]);
+            }
+        });
+
+        function previewThumbnail(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                thumbnailPreview.innerHTML = `<img src="${e.target.result}" alt="Thumbnail preview">`;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // ============ FORM SUBMISSION ============
+        const uploadForm = document.getElementById('uploadForm');
+        const progressContainer = document.getElementById('progressContainer');
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
+        const submitBtn = document.getElementById('submitBtn');
+
+        uploadForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData();
+
+            // Add form fields
+            formData.append('title', document.getElementById('title').value);
+            formData.append('description', document.getElementById('description').value);
+            formData.append('type', document.getElementById('contentType').value);
+            formData.append('genre', document.getElementById('genre').value);
+            formData.append('year', document.getElementById('year').value);
+
+            // Add files
+            if (videoInput.files[0]) {
+                formData.append('video', videoInput.files[0]);
+            }
+            if (thumbnailInput.files[0]) {
+                formData.append('thumbnail', thumbnailInput.files[0]);
+            }
+
+            // Validate
+            if (!document.getElementById('title').value.trim()) {
+                showToast('Please enter a title', 'error');
+                return;
+            }
+
+            // Show progress
+            progressContainer.classList.add('active');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = 'Uploading...';
+
+            try {
+                const xhr = new XMLHttpRequest();
+
+                xhr.upload.addEventListener('progress', (e) => {
+                    if (e.lengthComputable) {
+                        const percent = Math.round((e.loaded / e.total) * 100);
+                        progressFill.style.width = percent + '%';
+                        progressText.textContent = `Uploading... ${percent}%`;
+                    }
+                });
+
+                xhr.addEventListener('load', () => {
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        showToast('Content uploaded successfully!', 'success');
+                        setTimeout(() => {
+                            window.location.href = '/';
+                        }, 1500);
+                    } else {
+                        throw new Error('Upload failed');
+                    }
+                });
+
+                xhr.addEventListener('error', () => {
+                    throw new Error('Upload failed');
+                });
+
+                xhr.open('POST', '/api/content');
+                xhr.send(formData);
+
+            } catch (error) {
+                console.error('Upload error:', error);
+                showToast('Failed to upload content', 'error');
+                progressContainer.classList.remove('active');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = `
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17,8 12,3 7,8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+          Upload Content
+        `;
+            }
+        });
+
+        // ============ TOAST ============
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+        <span>${type === 'success' ? '✓' : '✕'}</span>
+        <span>${message}</span>
+      `;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.animation = 'slideIn 0.3s ease reverse forwards';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+    </script>
+</body>
+
+</html>
