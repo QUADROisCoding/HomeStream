@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HomeStream - Your Local Streaming Platform</title>
+    <meta name="description" content="Stream movies and series on your local network">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <a href="/" class="logo">HomeStream</a>
+        <ul class="nav-links">
+            <li><a href="/" class="active">Home</a></li>
+            <li><a href="#movies">Movies</a></li>
+            <li><a href="#series">Series</a></li>
+        </ul>
+        <div class="nav-right">
+            <div class="search-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input type="text" placeholder="Search titles..." id="searchInput">
+            </div>
+            <a href="/upload.html" class="btn btn-primary">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17,8 12,3 7,8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                Upload
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-background" id="heroBackground"></div>
+        <div class="hero-gradient"></div>
+        <div class="hero-content">
+            <span class="hero-badge" id="heroBadge">Featured</span>
+            <h1 class="hero-title" id="heroTitle">Welcome to HomeStream</h1>
+            <div class="hero-meta" id="heroMeta">
+                <span>Your local streaming platform</span>
+            </div>
+            <p class="hero-description" id="heroDescription">
+                Upload and stream your favorite movies and series across all devices on your network.
+                Get started by uploading your first video!
+            </p>
+            <div class="hero-buttons">
+                <button class="btn btn-play" id="heroPlayBtn" style="display: none;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="5,3 19,12 5,21"></polygon>
+                    </svg>
+                    Play
+                </button>
+                <a href="/upload.html" class="btn btn-info" id="heroInfoBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17,8 12,3 7,8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    Upload Content
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Recently Added -->
+        <section class="content-section" id="recentSection">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                    </svg>
+                    Recently Added
+                </h2>
+            </div>
+            <div class="carousel-container">
+                <button class="carousel-btn prev" onclick="scrollCarousel('recentCarousel', -1)">‹</button>
+                <div class="carousel" id="recentCarousel"></div>
+                <button class="carousel-btn next" onclick="scrollCarousel('recentCarousel', 1)">›</button>
+            </div>
+        </section>
+
+        <!-- Movies -->
+        <section class="content-section" id="moviesSection">
+            <div class="section-header">
+                <h2 class="section-title" id="movies">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path
+                            d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z" />
+                    </svg>
+                    Movies
+                </h2>
+            </div>
+            <div class="carousel-container">
+                <button class="carousel-btn prev" onclick="scrollCarousel('moviesCarousel', -1)">‹</button>
+                <div class="carousel" id="moviesCarousel"></div>
+                <button class="carousel-btn next" onclick="scrollCarousel('moviesCarousel', 1)">›</button>
+            </div>
+        </section>
+
+        <!-- Series -->
+        <section class="content-section" id="seriesSection">
+            <div class="section-header">
+                <h2 class="section-title" id="series">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path
+                            d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z" />
+                    </svg>
+                    TV Series
+                </h2>
+            </div>
+            <div class="carousel-container">
+                <button class="carousel-btn prev" onclick="scrollCarousel('seriesCarousel', -1)">‹</button>
+                <div class="carousel" id="seriesCarousel"></div>
+                <button class="carousel-btn next" onclick="scrollCarousel('seriesCarousel', 1)">›</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Video Modal -->
+    <div class="modal-overlay" id="videoModal">
+        <div class="modal-content">
+            <div class="video-container">
+                <button class="modal-close" onclick="closeModal()">×</button>
+                <video id="videoPlayer" controls></video>
+            </div>
+            <div class="modal-info">
+                <h2 class="modal-title" id="modalTitle"></h2>
+                <div class="modal-meta" id="modalMeta"></div>
+                <p class="modal-description" id="modalDescription"></p>
+                <div class="episodes-section" id="episodesSection" style="display: none;">
+                    <h3 class="episodes-title">Episodes</h3>
+                    <div id="episodesList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="/app.js"></script>
+</body>
+
+</html>
